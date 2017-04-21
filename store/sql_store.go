@@ -80,7 +80,7 @@ type SqlStore struct {
 	command       CommandStore
 	preference    PreferenceStore
 	license       LicenseStore
-	recovery      PasswordRecoveryStore
+	token         TokenStore
 	emoji         EmojiStore
 	status        StatusStore
 	fileInfo      FileInfoStore
@@ -131,7 +131,7 @@ func NewSqlStore() Store {
 	sqlStore.command = NewSqlCommandStore(sqlStore)
 	sqlStore.preference = NewSqlPreferenceStore(sqlStore)
 	sqlStore.license = NewSqlLicenseStore(sqlStore)
-	sqlStore.recovery = NewSqlPasswordRecoveryStore(sqlStore)
+	sqlStore.token = NewSqlTokenStore(sqlStore)
 	sqlStore.emoji = NewSqlEmojiStore(sqlStore)
 	sqlStore.status = NewSqlStatusStore(sqlStore)
 	sqlStore.fileInfo = NewSqlFileInfoStore(sqlStore)
@@ -159,7 +159,7 @@ func NewSqlStore() Store {
 	sqlStore.command.(*SqlCommandStore).CreateIndexesIfNotExists()
 	sqlStore.preference.(*SqlPreferenceStore).CreateIndexesIfNotExists()
 	sqlStore.license.(*SqlLicenseStore).CreateIndexesIfNotExists()
-	sqlStore.recovery.(*SqlPasswordRecoveryStore).CreateIndexesIfNotExists()
+	sqlStore.token.(*SqlTokenStore).CreateIndexesIfNotExists()
 	sqlStore.emoji.(*SqlEmojiStore).CreateIndexesIfNotExists()
 	sqlStore.status.(*SqlStatusStore).CreateIndexesIfNotExists()
 	sqlStore.fileInfo.(*SqlFileInfoStore).CreateIndexesIfNotExists()
@@ -667,8 +667,8 @@ func (ss *SqlStore) License() LicenseStore {
 	return ss.license
 }
 
-func (ss *SqlStore) PasswordRecovery() PasswordRecoveryStore {
-	return ss.recovery
+func (ss *SqlStore) Token() TokenStore {
+	return ss.token
 }
 
 func (ss *SqlStore) Emoji() EmojiStore {
